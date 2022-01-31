@@ -11,6 +11,7 @@ def index(request):
 def store_list(request):
     stores = Store.objects.all()
     store_count = Store.objects.count()
+    
     context = {
         'stores':stores,
         'countstores':store_count,

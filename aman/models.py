@@ -32,10 +32,10 @@ class AdmenAman(models.Model):
         return self.name
 class Store(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True)
-    image_store = models.ImageField(upload_to="Stores/MainPic",blank=True,verbose_name='صورة الفرع')
-    monthly_visited = models.BooleanField(default=True, verbose_name='زيارة شهرية')
+    image_store = models.ImageField(upload_to="Stores/MainPic",blank=True,null=True,verbose_name='صورة الفرع')
+    monthly_visited = models.BooleanField(default=True, verbose_name='زيارة شهرية',blank=True,null=True)
     admen = models.ForeignKey("aman.AdmenAman", verbose_name=("ادمين الفرع حاليا"), on_delete=models.DO_NOTHING , blank=True,null=True)
-    active = models.BooleanField(default=True, verbose_name='يعمل')
+    active = models.BooleanField(default=True, verbose_name='يعمل',blank=True,null=True)
     name_area = models.CharField(verbose_name=("اسم المنطقة"), max_length=20, blank=True, null=True)
     line = models.CharField(verbose_name=("خط السير"), max_length=50 ,blank=True, null=True)
     city = models.CharField(verbose_name=("المدينة"), max_length=50,blank=True, null=True)
@@ -59,7 +59,6 @@ class FixRequest(models.Model):
         ("Important","Important"),
         ("Postpone","Postpone")
        )
-    
     short_desc = models.CharField(max_length=200 ,verbose_name='وصف قصير للمشكلة')
     store = models.ForeignKey(Store ,verbose_name='الفرع',null=True, blank=True, on_delete=models.SET_NULL)
     admen_aman = models.ForeignKey(AdmenAman, verbose_name='الادمن المسئول' , on_delete=models.SET_NULL,null=True,blank=True)
@@ -72,7 +71,7 @@ class FixRequest(models.Model):
     def save(self , *args , **kwargs):
         if not self.slug:
             self.slug = slugify(self.short_desc)
-        super(Store,self).save(*args, **kwargs)
+        super(FixRequest,self).save(*args, **kwargs)
 
     def __str__(self):
         return self.short_desc[:15]

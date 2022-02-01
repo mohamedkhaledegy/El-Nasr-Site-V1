@@ -1,28 +1,39 @@
 {% extends "base.html" %}
-
-
-
+{% load static %}
 {% block content %}
-    <table class="table table-hover table-inverse table-responsive">
-        <thead class="thead-inverse">
-            <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td scope="row"></td>
-                    <td>1</td>
-                    <td>2</td>
-                </tr>
-                <tr>
-                    <td scope="row"></td>
-                    <td>1</td>
-                    <td>2</td>
-                </tr>
-            </tbody>
-    </table>    
+<div class="container-fluid bg-transparent py-5 my-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="owl-carousel testimonial-carousel rounded p-5 wow zoomIn" data-wow-delay="0.6s">
+                    <div class="testimonial-item text-center text-white">
+                        <h4 class="text-white mb-0">فرع العجمى</h4>
+                        <hr class="mx-auto w-25">
+                        <p class="fs-5"><b>العنوان :</b> شارع الايمان (شارع همام)، الذراع البحري، قسم أول العامرية، الإسكندرية</p>
+                        <hr class="mx-auto w-25">
+                        <p class="fs-5" > <b>الادمين أ : </b> أحمد مجدى </p>
+                        <iframe width=100% src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3417.013855524807!2d29.737761815139876!3d31.081541581516962!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14f593fe8e3d0fbb%3A0x8dab7ac611e10ae2!2sAman%20Store%20-%20El%20Agamy!5e0!3m2!1sen!2seg!4v1643699461423!5m2!1sen!2seg" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+
+                    </div>
+                    
+                    <div class="testimonial-item text-center text-white">
+                        <p class="fs-5">Dolores sed duo clita justo dolor et stet lorem kasd dolore lorem ipsum. At lorem lorem magna ut et, nonumy labore diam erat. Erat dolor rebum sit ipsum.</p>
+                        <hr class="mx-auto w-25">
+                        <h4 class="text-white mb-0">Client Name</h4>
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock content %}
     

@@ -1,5 +1,5 @@
-from .models import Store
-from django.shortcuts import render
+from .models import *
+from django.shortcuts import render , get_object_or_404
 from django.core.paginator import Paginator
 from django.db.models import Count
 from django.db.models import Q
@@ -20,7 +20,15 @@ def store_list(request):
             }
     return render(request,'store_list.html',context)
 
+def store_detail(request , slug):
+    store = get_object_or_404(Store,slug=slug)
+    context = {
+        'store':store
+    }
+    return render(request,'store_detail.html',context)
 
+def new_request(request):
+    pass
 # def productlist(request , category_slug=None):
 #     category = None
 #     productlist = Product.objects.all()

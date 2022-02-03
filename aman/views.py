@@ -3,6 +3,7 @@ from django.shortcuts import render , get_object_or_404
 from django.core.paginator import Paginator
 from django.db.models import Count
 from django.db.models import Q
+from .forms import *
 # Create your views here.
 
 
@@ -25,10 +26,14 @@ def store_detail(request , slug):
     context = {
         'store':store
     }
+
     return render(request,'store_detail.html',context)
 
-def new_request(request):
-    pass
+def new_request(request,slug):
+    store = get_object_or_404(Store,slug=slug)
+    form = FixForm()
+    context = { 'formfix' : form}
+    return render(request,'request-new.html',context)
 # def productlist(request , category_slug=None):
 #     category = None
 #     productlist = Product.objects.all()

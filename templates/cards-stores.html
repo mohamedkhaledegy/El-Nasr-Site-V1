@@ -1,5 +1,4 @@
-
-{% load static %}
+ {% load static %}
 <div class="container-fluid py-5">
     <div class="container">
         <div class="row g-5">
@@ -18,34 +17,36 @@
                     <div class="position-relative rounded-top" style="z-index: 1;">
                         <img class="img-fluid rounded-top w-100" src="{% static 'img/aman-branch.jpg' %}" alt="">
                         <div class="position-absolute top-100 start-50 translate-middle bg-light rounded p-2 d-flex">
-                            <a class="btn btn-primary btn-square m-1" href="#"><i class="fas fa-address-card"></i><small >Ahmed Magdy</small></a>
-                            <a class="btn btn-primary btn-square m-1" href="#"></i></a>
+                            <a class="btn btn-primary btn-square m-1" href="#"><i class="fas fa-address-card"></i></a>
+
                             <a class="btn btn-primary btn-square  m-1" data-bs-toggle="collapse" href="#collapse2" role="button" aria-expanded="false" aria-controls="collapse2"><i class="fas fa-user"></i></a>
                             <a class="btn btn-primary btn-square  m-1" data-bs-toggle="collapse" href="#collapse1" role="button" aria-expanded="false" aria-controls="collapse1"><i class="fas fa-map-marker-alt"></i></a>
-                         
+
                         </div>
 
                     </div>
                     <div class="team-text position-relative bg-light text-center rounded-bottom p-4 pt-5">
-                        <a href="{{store_card.slug}}"><h4 class="mb-2">{{store_card.name}}</h4></a>
+                        <a href="{{store_card.slug}}">
+                            <h4 class="mb-2">{{store_card.name}}</h4>
+                        </a>
                         <div class="collapse" id="collapse1">
                             <div class="card ">
-                             <div class="card-header">
-                                 العنوان
-                             </div>
-                             <div class="card-body">
-                                 {{store_card.address_store}}
-                             </div>
+                                <div class="card-header">
+                                    العنوان
+                                </div>
+                                <div class="card-body">
+                                    {{store_card.address_store}}
+                                </div>
                             </div>
                         </div>
                         <div class="collapse" id="collapse2">
                             <div class="card ">
-                             <div class="card-header">
-                                 الادمين : {{srore_card.admen}}
-                             </div>
-                             <div class="card-body">
-                                 <p><i class="fas fa-phone"></i>{{store_card.admen.mobile_num}</p>
-                             </div>
+                                <div class="card-header">
+                                    الادمين : {{store_card.admen}}
+                                </div>
+                                <div class="card-body">
+                                    <p><i class="fas fa-phone"></i>{{store_card.admen.mobile_num}}</p>
+                                </div>
                             </div>
                         </div>
                         <p class="text-primary mb-0">{{store_card.city}} - {{store_card.name_area}}</p>

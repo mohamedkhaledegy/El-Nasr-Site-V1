@@ -1,3 +1,4 @@
+{% load static %}
 <section class="head">
     <div class="container-fluid bg-light ps-5 pe-0 d-none d-lg-block">
         <div class="row gx-0">
@@ -19,23 +20,23 @@
         </div>
     </div>
     <nav dir="rtl" class="navbar rtl navbar-expand-lg bg-white navbar-light shadow-sm px-5 py-3 py-lg-0">
-        <a href="index.html" class="navbar-brand p-0">
-            <h1 class="m-0 text-primary"><i class="fa fa-tooth me-2"></i>النـصـر</h1>
+        <a href="{% url 'home' %}" class="navbar-brand p-0">
+            <h1 class="m-0 text-primary"> <img src="{% static 'img/logo-elnasr.jpg' %}" alt=""> </i>النـصـر للمقاولات والتوريدات العمومية</h1>
         </a>
+        <hr>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0">
-                <a href="{% url 'home' %}" class="nav-item nav-link active">Home</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
-                <a href="{% url 'stores' %}" class="nav-item nav-link">ٍAmaan Stores</a>
-                <a href="service.html" class="nav-item nav-link">Services</a>
+                <a href="{% url 'home' %}" class="nav-item nav-link active">الرئيسية</a>
+                <a href="{% url 'stores' %}" class="nav-item nav-link">فروع أمان</a>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">خدمات</a>
                     <div class="dropdown-menu m-0">
-                        <a href="price.html" class="dropdown-item">Services</a>
-                        <a href="team.html" class="dropdown-item">Our Clients</a>
+                        <a href="add-proplem.html" class="dropdown-item">طلب صيانة اضافية</a>
+                        <a href="fast-request.html" class="dropdown-item">طلب صيانة طارئة</a>
+                        <a href="fix-search.html" class="dropdown-item">استعلام عن موعد زيارة فرع</a>
                     </div>
                 </div>
                 <a href="contact-us.html" class="nav-item nav-link">Contact</a>

@@ -20,6 +20,7 @@ class AdmenAman(models.Model):
     name = models.CharField(verbose_name=("الاسم"), max_length=50)
     mobile_num = models.CharField(max_length=11,  verbose_name='رقم الموبايل')
     mobile_num2 = models.CharField(verbose_name=("رقم الموبايل 2"), max_length=11, blank=True,null=True)
+    email_address = models.EmailField(verbose_name=("الايميل"), blank=True,null=True)
     tag = models.ManyToManyField(Tags,verbose_name=("Tag"), blank=True)
     name_area = models.CharField(verbose_name=("اسم المنطقة"), max_length=20, blank=True, null=True)
     slug = models.SlugField(blank=True,null=True)
@@ -50,7 +51,7 @@ class Store(models.Model):
         super(Store,self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 class FixRequest(models.Model):
     

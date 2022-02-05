@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'import_export',
     'django_countries',
     'django_filters',
+    'bootstrap5'
 ]
 
 MIDDLEWARE = [

@@ -1,4 +1,7 @@
 
+from logging import PlaceHolder
+from operator import mod
+from pydoc import describe
 from tkinter import N
 from django.db import models
 from django.contrib.auth import login ,logout , authenticate
@@ -6,6 +9,8 @@ from django.contrib.auth import login ,logout , authenticate
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.utils.text import slugify
+
+import aman
 
 app_name = 'aman'
 
@@ -32,7 +37,7 @@ class AdmenAman(models.Model):
     def __str__(self):
         return self.name
 class Store(models.Model):
-    name = models.CharField(max_length=200, blank=True, null=True)
+    name = models.CharField( max_length=200,verbose_name=("اسم الفرع"),unique=True)
     image_store = models.ImageField(upload_to="Stores/MainPic",blank=True,null=True,verbose_name='صورة الفرع')
     monthly_visited = models.BooleanField(default=True, verbose_name='زيارة شهرية',blank=True,null=True)
     admen = models.ForeignKey("aman.AdmenAman", verbose_name=("ادمين الفرع حاليا"), on_delete=models.DO_NOTHING , blank=True,null=True)
@@ -49,6 +54,10 @@ class Store(models.Model):
         if not self.slug:
             self.slug = slugify(self.name)
         super(Store,self).save(*args, **kwargs)
+
+
+    def __unicode__(self):
+        return self.name
 
     def __str__(self):
         return str(self.name)
@@ -76,3 +85,60 @@ class FixRequest(models.Model):
 
     def __str__(self):
         return self.short_desc[:15]
+
+class Item(models.Model):
+    item_types = (
+        ('دهانات','دهانات'),
+        ('قطع غيار','قطع غيار'),
+        ('تركيبات','تركيبات'),
+        ('كهرباء','كهرباء'),
+        ('زجاج','زجاج'),
+        ('اكسسوارات السيكوريت','اكسسوارات السيكوريت'),
+        ('تكييف','تكييف'),
+        ('نقل','نقل'),
+        ('معاينة','معاينة'),
+        ('رفع مقاسات','رفع مقاسات'),
+        ('ستاندات','ستاندات'),
+        ('علب خشبية','علب خشبية'),
+        ('جيبسون بورد','جيبسون بورد'),
+        ('كلادينج','كلادينج'),
+        ('الباب الصاج','الباب الصاج'),
+        ('ستانلس','ستانلس'),
+    )
+    name = models.CharField(verbose_name=("اسم القطعة-الخدمة"), max_length=100)
+    describe_item = models.TextField(verbose_name=("وصف القطعة"),blank=True, null=True)
+    type_parent = models.CharField(verbose_name=("النوع"),max_length=100,choices=item_types)
+    image = models.ImageField(upload_to='Items/',blank=True,null=True,verbose_name='صورة القطعة')
+    
+    def __str__(self):
+        return str(self.name)
+
+
+class Visit(models.Model):
+    types_visit = (
+        ('شهرية','شهرية') ,
+        ('طارئة','طارئة') ,
+        ('شهرية-تكميلية','شهرية-تكميلية') ,
+        ('معاينة','معاينة') ,
+        )
+    store = models.ForeignKey(Store ,verbose_name='الفرع',null=True, blank=True, on_delete=models.SET_NULL)
+    type_of = models.CharField(max_length=100,blank=True, null=True,verbose_name='نوع الزيارة',choices=types_visit)
+    short_desc = models.CharField(max_length=300,blank=True, null=True,verbose_name=('ملخص المشكلة'))
+    describe_proplem = models.TextField(max_length=3000,blank=True, null=True,verbose_name=('وصف المشكلة'))
+    done = models.BooleanField(default=False)
+    argent = models.BooleanField(default=False)
+    created_by = models.ForeignKey("aman.AdmenAman", verbose_name='انشاء بواسطة',on_delete=models.SET_NULL,blank=True, null=True)
+    date_created = models.DateTimeField(auto_now=True,verbose_name='تايخ تقديم الطلب')
+    date_visit = models.DateTimeField(verbose_name='تاريخ الزيارة',blank=True,null=True)
+    content = models.ManyToManyField("aman.Item", verbose_name=_("الوحدة"),blank=True)
+
+    def save(self , *args , **kwargs):
+        if not self.short_desc:
+            self.short_desc = 'زيارة ' + str(self.type_of) + ' لفرع : ' + str(self.store)
+        super(Visit,self).save(*args, **kwargs)
+
+
+    def __str__(self):
+        return str(self.short_desc)
+
+

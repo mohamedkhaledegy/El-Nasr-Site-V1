@@ -21,7 +21,7 @@
     </div>
     <nav dir="rtl" class="navbar rtl navbar-expand-lg bg-white navbar-light shadow-sm px-5 py-3 py-lg-0">
         <a href="{% url 'home' %}" class="navbar-brand p-0">
-            <h1 class="m-0 text-primary"> <img src="{% static 'img/logo-elnasr.jpg' %}" alt=""> </i>النـصـر للمقاولات والتوريدات العمومية</h1>
+            <h1 class="m-0 text-primary"> <img src="{% static 'img/logo-elnasr.jpg' %}" alt=""> </i>النـصـر</h1>
         </a>
         <hr>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -30,19 +30,26 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0">
                 <a href="{% url 'home' %}" class="nav-item nav-link active">الرئيسية</a>
-                <a href="{% url 'stores' %}" class="nav-item nav-link">فروع أمان</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">فروع أمان</a>
+                    <div class="dropdown-menu m-0">
+                        <a href="{% url 'stores' %}" class="dropdown-item">كل الفروع</a> {% for store in stores %}
+                        <a href="#" class="dropdown-divider"></a>
+                        <a href="stores/{{store.slug}}/" class="dropdown-item">فرع : {{store.name}}   <small>مدينة  : {{store.city}}</small></a> {% endfor %}
+                    </div>
+                </div>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">خدمات</a>
                     <div class="dropdown-menu m-0">
-                        <a href="add-proplem.html" class="dropdown-item">طلب صيانة اضافية</a>
-                        <a href="fast-request.html" class="dropdown-item">طلب صيانة طارئة</a>
-                        <a href="fix-search.html" class="dropdown-item">استعلام عن موعد زيارة فرع</a>
+                        <a href="{% url 'new_visit' %}" class="dropdown-item">طلب صيانة اضافية</a>
+                        <a href="{% url 'new_visit' %}" class="dropdown-item">طلب صيانة طارئة</a>
+                        <a href="#" class="dropdown-item">استعلام عن موعد زيارة فرع</a>
                     </div>
                 </div>
-                <a href="contact-us.html" class="nav-item nav-link">Contact</a>
+                <a href="contact-us.html" class="nav-item nav-link">تواصل معنا</a>
             </div>
             <button type="button" class="btn text-dark" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></button>
-            <a href="appointment.html" class="btn btn-primary py-2 px-4 ms-3">طلب خدمة طوارئ</a>
+            <a href="{% url 'new_visit' %}" class="btn btn-primary py-2 px-4 ms-3">طلب خدمة طوارئ</a>
         </div>
     </nav>
 </section>

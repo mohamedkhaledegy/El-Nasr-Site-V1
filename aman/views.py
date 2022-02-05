@@ -1,33 +1,119 @@
+from multiprocessing import context
 from .models import *
-from django.shortcuts import render , get_object_or_404
+from django.http import HttpResponseRedirect
+from django.shortcuts import render ,redirect, get_object_or_404
 from django.core.paginator import Paginator
 from django.db.models import Count
 from django.db.models import Q
 from .forms import *
+from .filters import *
 # Create your views here.
 
 
 def index(request):
-    context = {'test':'hello'}
-    return render(request,'index.html',context)
+    stores = Store.objects.all()
+    stores_count = stores.count()
+    visit_form = 'visitform'
+    store_filter = StoreFilter()
+    
+    context = {
+        'test':'hello',
+        'stores':stores,
+        'stores_count':stores_count,
+        'stores_filter':store_filter,
+        'visit_form':visit_form,
+        }
+    return render(request,'home.html',context)
 
 def store_list(request):
     stores = Store.objects.all()
-    store_count = Store.objects.count()
+    visit_form = 'visitform'
     
+    if request.GET:
+        store_filter = StoreFilter(request.GET)
+        stores = store_filter.qs
+    else:
+        store_filter = StoreFilter()
+        
+    store_count = stores.count()
     context = {
         'stores':stores,
-        'countstores':store_count,
+        'count_stores':store_count,
+        'stores_filter':store_filter,
+        'visit_form':visit_form,
             }
     return render(request,'store_list.html',context)
 
 def store_detail(request , slug):
     store = get_object_or_404(Store,slug=slug)
+    form = VisitForm()
+
+    if request.method == "POST":
+        form = VisitForm(request.POST )
+        if form.is_valid():
+            #store = VisitForm(request.POST)
+            #print(store)
+            form.save()
+            return redirect('/stores')
+        else:
+            form = VisitForm()
+    else:
+        form = VisitForm()
+
     context = {
-        'store':store
+        'store':store,
+        
+        'form_visit':form,
     }
 
     return render(request,'store_detail.html',context)
+
+
+def new_visit(request):
+    form = VisitForm()
+
+    if request.method == "POST":
+        form = VisitForm(request.POST)
+        if form.is_valid():
+            #store = VisitForm(request.POST)
+            #print(store)
+            form.save()
+            return redirect('/stores')
+        else:
+            form = VisitForm()
+    else:
+        form = VisitForm()
+
+    context = {
+        'form_visit':form
+    }
+    return render(request,'visit/visit-new.html',context)
+
+def visit_list(request):
+    visits = Visit.objects.all()
+    visits_count = Visit.objects.count()
+    store_count = stores.count()
+
+    context = {
+        'visits':visits,
+        'visits_count':visits_count,
+        'count_stores':store_count,
+
+    }
+    return render(request,'visit/list.html',context)
+
+def visit_list_store(request,slug):
+    store = get_object_or_404(Store,slug=slug)
+    visits_store = Visit.objects.filter(store=store)
+    visits_store_count = Visit.objects.filter(store__slug=slug).count()
+    context = {
+        'store':store,
+        'visits':visits_store,
+        'visits_count':visits_store_count,
+    }
+    return render(request,'visit/visit-list-store.html',context)
+
+
 
 def new_request(request,slug):
     store = get_object_or_404(Store,slug=slug)

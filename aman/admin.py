@@ -5,7 +5,7 @@ from import_export.admin import ImportExportModelAdmin
 
 # Register your models here.
 @admin.register(Store)
-class DeviceImportExport(ImportExportModelAdmin):
+class StoreImportExport(ImportExportModelAdmin):
     pass
 
 
@@ -16,9 +16,14 @@ class FixRequestAdmin(admin.ModelAdmin):
 admin.site.register(FixRequest, FixRequestAdmin)
 
 
-class SpareAdmin(admin.ModelAdmin):
-    list_display = ('name', 'brand')
     ## العواميد اللى بتظهر فى الادمين داشبورد 
-
+@admin.register(Item)
+class ItemImportExport(ImportExportModelAdmin):
+    pass
 admin.site.register(AdmenAman)
 admin.site.register(Tags)
+
+
+@admin.register(Visit)
+class VisitImportExport(ImportExportModelAdmin):
+    pass

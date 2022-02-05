@@ -17,7 +17,7 @@
                     <div class="position-relative rounded-top" style="z-index: 1;">
                         <img class="img-fluid rounded-top w-100" src="{% static 'img/aman-branch.jpg' %}" alt="">
                         <div class="position-absolute top-100 start-50 translate-middle bg-light rounded p-2 d-flex">
-                            <a class="btn btn-primary btn-square m-1" href="#"><i class="fas fa-address-card"></i></a>
+                            <a class="btn btn-primary btn-square m-1" data-bs-toggle="collapse" href="#collapse3" role="button" aria-expanded="false" aria-controls="collapse3"><i class="fas fa-address-card"></i></a>
 
                             <a class="btn btn-primary btn-square  m-1" data-bs-toggle="collapse" href="#collapse2" role="button" aria-expanded="false" aria-controls="collapse2"><i class="fas fa-user"></i></a>
                             <a class="btn btn-primary btn-square  m-1" data-bs-toggle="collapse" href="#collapse1" role="button" aria-expanded="false" aria-controls="collapse1"><i class="fas fa-map-marker-alt"></i></a>
@@ -43,6 +43,17 @@
                             <div class="card ">
                                 <div class="card-header">
                                     الادمين : {{store_card.admen}}
+                                </div>
+                                <div class="card-body">
+                                    <p><i class="fas fa-phone"></i>{{store_card.admen.mobile_num}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="collapse" id="collapse3">
+                            <div class="card ">
+                                <div class="card-header">
+                                    الزيارات :
+                                    <a href="/{{store_card.slug}}/visit/list">الزيارات </a>
                                 </div>
                                 <div class="card-body">
                                     <p><i class="fas fa-phone"></i>{{store_card.admen.mobile_num}}</p>

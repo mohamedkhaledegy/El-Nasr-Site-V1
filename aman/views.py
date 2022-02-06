@@ -27,27 +27,31 @@ def index(request):
 
 def store_list(request):
     stores = Store.objects.all()
-    visit_form = 'visitform'
+    visit_list = Visit.objects.all()
     
     if request.GET:
         store_filter = StoreFilter(request.GET)
         stores = store_filter.qs
     else:
         store_filter = StoreFilter()
-        
+    
+    all_stores = Store.objects.all()
     store_count = stores.count()
     context = {
-        'stores':stores,
+        'stores':all_stores,
+        'storess':stores,
         'count_stores':store_count,
         'stores_filter':store_filter,
-        'visit_form':visit_form,
+        'visits':visit_list,
+        
             }
     return render(request,'store_list.html',context)
 
 def store_detail(request , slug):
     store = get_object_or_404(Store,slug=slug)
-    form = VisitForm()
+    form = VisitForm(instance=store)
 
+    stores = Store.objects.all()
     if request.method == "POST":
         form = VisitForm(request.POST )
         if form.is_valid():
@@ -62,7 +66,7 @@ def store_detail(request , slug):
 
     context = {
         'store':store,
-        
+        'stores':stores,
         'form_visit':form,
     }
 
@@ -72,6 +76,7 @@ def store_detail(request , slug):
 def new_visit(request):
     form = VisitForm()
 
+    stores = Store.objects.all()
     if request.method == "POST":
         form = VisitForm(request.POST)
         if form.is_valid():
@@ -85,16 +90,19 @@ def new_visit(request):
         form = VisitForm()
 
     context = {
-        'form_visit':form
+        'form_visit':form,
+        'stores':stores,
     }
     return render(request,'visit/visit-new.html',context)
 
 def visit_list(request):
     visits = Visit.objects.all()
+    
+    stores = Store.objects.all()
     visits_count = Visit.objects.count()
-    store_count = stores.count()
-
+    store_count = Store.objects.count()
     context = {
+        'stores':stores,
         'visits':visits,
         'visits_count':visits_count,
         'count_stores':store_count,
@@ -103,17 +111,19 @@ def visit_list(request):
     return render(request,'visit/list.html',context)
 
 def visit_list_store(request,slug):
+    
+    stores = Store.objects.all()
     store = get_object_or_404(Store,slug=slug)
     visits_store = Visit.objects.filter(store=store)
     visits_store_count = Visit.objects.filter(store__slug=slug).count()
     context = {
         'store':store,
+        'stores':stores,
         'visits':visits_store,
         'visits_count':visits_store_count,
     }
+
     return render(request,'visit/visit-list-store.html',context)
-
-
 
 def new_request(request,slug):
     store = get_object_or_404(Store,slug=slug)
@@ -124,11 +134,9 @@ def new_request(request,slug):
 #     category = None
 #     productlist = Product.objects.all()
 #     categorylist = Category.objects.annotate(total_products=Count('product'))
-
 #     if category_slug :
 #         category = get_object_or_404(Category ,slug=category_slug)
 #         productlist = productlist.filter(category=category)
-
 #     search_query = request.GET.get('q')
 #     if search_query :
 #         productlist = productlist.filter(
@@ -138,11 +146,9 @@ def new_request(request,slug):
 #             Q(brand__brand_name__icontains = search_query) |
 #             Q(category__category_name__icontains = search_query) 
 #         )
-
 #     paginator = Paginator(productlist, 1) # Show 25 contacts per page
 #     page = request.GET.get('page')
 #     productlist = paginator.get_page(page)
 #     template = 'Product/product_list.html'
-
 #     context = {'product_list' : productlist , 'category_list' : categorylist ,'category' : category }
 #     return render(request , template , context)

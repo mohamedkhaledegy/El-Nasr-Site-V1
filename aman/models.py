@@ -121,16 +121,16 @@ class Visit(models.Model):
         ('شهرية-تكميلية','شهرية-تكميلية') ,
         ('معاينة','معاينة') ,
         )
-    store = models.ForeignKey(Store ,verbose_name='الفرع',null=True, blank=True, on_delete=models.SET_NULL)
+    store = models.ForeignKey(Store ,verbose_name='الفرع',null=True, blank=True, on_delete=models.PROTECT)
     type_of = models.CharField(max_length=100,blank=True, null=True,verbose_name='نوع الزيارة',choices=types_visit)
     short_desc = models.CharField(max_length=300,blank=True, null=True,verbose_name=('ملخص المشكلة'))
     describe_proplem = models.TextField(max_length=3000,blank=True, null=True,verbose_name=('وصف المشكلة'))
     done = models.BooleanField(default=False)
     argent = models.BooleanField(default=False)
-    created_by = models.ForeignKey("aman.AdmenAman", verbose_name='انشاء بواسطة',on_delete=models.SET_NULL,blank=True, null=True)
-    date_created = models.DateTimeField(auto_now=True,verbose_name='تايخ تقديم الطلب')
-    date_visit = models.DateTimeField(verbose_name='تاريخ الزيارة',blank=True,null=True)
-    content = models.ManyToManyField("aman.Item", verbose_name=_("الوحدة"),blank=True)
+    created_by = models.ForeignKey("aman.AdmenAman", verbose_name='انشاء بواسطة',on_delete=models.PROTECT,blank=True, null=True)
+    date_created = models.DateTimeField(auto_now=True,verbose_name='وقت تقديم الطلب')
+    date_visit = models.DateTimeField(verbose_name='موعد الزيارة',blank=True,null=True)
+    content = models.ManyToManyField("aman.Item",related_name='items', verbose_name=_("الوحدة"),blank=True)
 
     def save(self , *args , **kwargs):
         if not self.short_desc:

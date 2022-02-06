@@ -19,7 +19,8 @@
             </div>
         </div>
     </div>
-    <nav dir="rtl" class="navbar rtl navbar-expand-lg bg-white navbar-light shadow-sm px-5 py-3 py-lg-0">
+
+    <nav dir="rtl" class="justify-content-between navbar rtl navbar-expand-lg bg-white navbar-light shadow-sm px-5 py-3 py-lg-0">
         <a href="{% url 'home' %}" class="navbar-brand p-0">
             <h1 class="m-0 text-primary"> <img src="{% static 'img/logo-elnasr.jpg' %}" alt=""> </i>النـصـر</h1>
         </a>
@@ -32,24 +33,58 @@
                 <a href="{% url 'home' %}" class="nav-item nav-link active">الرئيسية</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">فروع أمان</a>
-                    <div class="dropdown-menu m-0">
-                        <a href="{% url 'stores' %}" class="dropdown-item">كل الفروع</a> {% for store in stores %}
+                    <div class="text-end dropdown-menu m-0">
+                        <a href="{% url 'stores' %}" class="dropdown-item">كل الفروع</a> {% for str in stores %}
                         <a href="#" class="dropdown-divider"></a>
-                        <a href="stores/{{store.slug}}/" class="dropdown-item">فرع : {{store.name}}   <small>مدينة  : {{store.city}}</small></a> {% endfor %}
+                        <a href="{% url 'store_details' str.slug %}" class="dropdown-item">فرع : {{str.name}}   <small>مدينة  : {{str.city}}S</small></a> {% endfor %}
                     </div>
                 </div>
-                <div class="nav-item dropdown">
+                <div class=" nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">خدمات</a>
-                    <div class="dropdown-menu m-0">
+                    <div class="text-end dropdown-menu m-0">
                         <a href="{% url 'new_visit' %}" class="dropdown-item">طلب صيانة اضافية</a>
                         <a href="{% url 'new_visit' %}" class="dropdown-item">طلب صيانة طارئة</a>
                         <a href="#" class="dropdown-item">استعلام عن موعد زيارة فرع</a>
                     </div>
                 </div>
-                <a href="contact-us.html" class="nav-item nav-link">تواصل معنا</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">الزيارات</a>
+                    <div class="text-end dropdown-menu m-0">
+                        <a href="#" class="dropdown-item">جميع الزيارات</a>
+                        <a href="#" class="dropdown-item">زيارات الشهر</a>
+                        <a href="#" class="dropdown-item">زيارات فرع</a>
+                        <a href="#" class="dropdown-item">زيارات يوم</a>
+                    </div>
+
+                </div>
+
+                <a href="{% url 'visit_list' %}" class="nav-item nav-link">أعطال الفروع</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">أعمال أخرى</a>
+                    <div class="text-end dropdown-menu m-0">
+                        <a href="#" class="dropdown-item">توريدات</a>
+                        <a href="#" class="dropdown-item">نقل</a>
+                        <a href="#" class="dropdown-item">تركيبات</a>
+                        <a href="#" class="dropdown-item">تصميم وتصنيع</a>
+                    </div>
+
+                </div>
             </div>
             <button type="button" class="btn text-dark" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></button>
             <a href="{% url 'new_visit' %}" class="btn btn-primary py-2 px-4 ms-3">طلب خدمة طوارئ</a>
         </div>
     </nav>
+    <div class="container-fluid mt-2">
+        <div class="row gx-0">
+            <div class="col-md-6 text-center text-lg-start mb-2 mb-lg-0">
+                {% if user.is_authenticated %}
+                <button type="button" class="btn btn-light">Welcome Name : {{user}}</button>
+
+                <button type="button" class="btn btn-danger">Log Out</button> {% else %}
+                <button type="button" class="btn btn-primary">Log In</button> {% endif %}
+            </div>
+        </div>
+
+    </div>
+
 </section>

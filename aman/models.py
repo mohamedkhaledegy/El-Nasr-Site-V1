@@ -1,11 +1,14 @@
 
+from distutils.command.upload import upload
 from logging import PlaceHolder
 from operator import mod
 from pydoc import describe
 from tkinter import N
 from django.db import models
 from django.contrib.auth import login ,logout , authenticate
-
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.utils.text import slugify
@@ -15,6 +18,39 @@ import aman
 app_name = 'aman'
 
 # Create your models here.
+
+class Profile(models.Model):
+    pos_site = (
+        ('aman_admin','Admin' ),
+        ('aman_manager','Manager'),
+        ('quality','Quality'),
+        ('technical','Technical'),
+        ('staff','staff'),
+
+    )
+
+    user = models.OneToOneField(User , on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=50 ,verbose_name="الاسم الاول", blank=True, null=True)
+    last_name = models.CharField(max_length=50 ,verbose_name="اللقب", blank=True, null=True)
+    phone_number = models.CharField(max_length=11,verbose_name="رقم التليفون",null=True , blank=True)
+    phone_number2 = models.CharField(max_length=11,verbose_name="رقم التليفون 2",null=True , blank=True)
+    addres = models.CharField(max_length=300 ,verbose_name="العنوان", blank=True, null=True)
+    area = models.CharField(max_length=50 ,verbose_name="المنقطة", blank=True, null=True)
+    mailo = models.EmailField(max_length=254,verbose_name="ايميل (بالشركة)", blank=True, null=True)
+    image = models.ImageField(upload_to="Profiles/",verbose_name="صورة شخصية",blank=True, null=True)
+    stores = models.ManyToManyField('aman.Store',verbose_name="الفروع المسئول عنها",blank=True)    
+    title = models.CharField(max_length=50 ,verbose_name="المسمى الوظيفى", blank=True, null=True)
+    pos_in_store = models.CharField(max_length=50 ,choices=pos_site,verbose_name="صفته بالموقع", blank=True, null=True)
+
+    def __str__(self):
+        return str(self.user)
+
+@receiver(post_save , sender=User)
+def create_user_profile(sender,instance,created , **kwargs):
+    if created:
+        Profile.objects.create(
+            user = instance
+        )
 
 class Tags(models.Model):
     name_tag = models.CharField(max_length=50,unique=True)

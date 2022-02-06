@@ -125,6 +125,20 @@ def visit_list_store(request,slug):
 
     return render(request,'visit/visit-list-store.html',context)
 
+
+
+def profile(request):
+    profile = Profile.objects.get(user=request.user)
+    stores = Store.objects.all()
+    print(request.path)
+    print(profile)
+    context = {
+        'profile':profile,
+        'stores':stores,
+    }
+    return render(request,'profile/profile.html',context)
+
+
 def new_request(request,slug):
     store = get_object_or_404(Store,slug=slug)
     form = FixForm()

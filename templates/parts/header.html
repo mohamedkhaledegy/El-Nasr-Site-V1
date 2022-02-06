@@ -19,7 +19,6 @@
             </div>
         </div>
     </div>
-
     <nav dir="rtl" class="justify-content-between navbar rtl navbar-expand-lg bg-white navbar-light shadow-sm px-5 py-3 py-lg-0">
         <a href="{% url 'home' %}" class="navbar-brand p-0">
             <h1 class="m-0 text-primary"> <img src="{% static 'img/logo-elnasr.jpg' %}" alt=""> </i>النـصـر</h1>
@@ -30,7 +29,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0">
-                <a href="{% url 'home' %}" class="nav-item nav-link active">الرئيسية</a>
+                <a href="{% url 'home' %}" class="nav-item nav-link active">الرئيسية</a> {% if user.is_authenticated %}
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">فروع أمان</a>
                     <div class="text-end dropdown-menu m-0">
@@ -53,11 +52,8 @@
                         <a href="#" class="dropdown-item">جميع الزيارات</a>
                         <a href="#" class="dropdown-item">زيارات الشهر</a>
                         <a href="#" class="dropdown-item">زيارات فرع</a>
-                        <a href="#" class="dropdown-item">زيارات يوم</a>
                     </div>
-
                 </div>
-
                 <a href="{% url 'visit_list' %}" class="nav-item nav-link">أعطال الفروع</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">أعمال أخرى</a>
@@ -67,24 +63,29 @@
                         <a href="#" class="dropdown-item">تركيبات</a>
                         <a href="#" class="dropdown-item">تصميم وتصنيع</a>
                     </div>
-
                 </div>
             </div>
             <button type="button" class="btn text-dark" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></button>
-            <a href="{% url 'new_visit' %}" class="btn btn-primary py-2 px-4 ms-3">طلب خدمة طوارئ</a>
+            <a href="{% url 'new_visit' %}" class="btn btn-primary py-2 px-4 ms-3">طلب خدمة طوارئ</a> {% else %}
         </div>
+        </div>
+        {% endif %}
     </nav>
     <div class="container-fluid mt-2">
         <div class="row gx-0">
             <div class="col-md-6 text-center text-lg-start mb-2 mb-lg-0">
                 {% if user.is_authenticated %}
-                <button type="button" class="btn btn-light">Welcome Name : {{user}}</button>
 
-                <button type="button" class="btn btn-danger">Log Out</button> {% else %}
-                <button type="button" class="btn btn-primary">Log In</button> {% endif %}
+                <button type="button" class="btn btn-light"><b>{{user}}</b> مرحبا  </button>
+                <a href="{% url 'profile' %}" class="btn btn-light">صفحة الادمين</a>
+                <a href="{% url 'logout' %}" class="btn btn-danger">Log Out</a> {% else %} {% if request.path != "/accounts/login/" %}
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <a href="{% url 'login' %}" class="btn btn-primary">يرجى تسجل الدخول أولا </a>
+                    </div>
+                </div>
+                {% endif %}{% endif %}
             </div>
         </div>
-
     </div>
-
 </section>

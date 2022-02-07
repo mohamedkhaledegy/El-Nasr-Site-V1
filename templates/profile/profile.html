@@ -96,18 +96,12 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="list-group" style="max-height: 200px; overflow-y: scroll;">
-                                        <a href="#" class="list-group-item list-group-item-action">
-                                          The current link item
-                                        </a>
-                                        <a href="#" class="list-group-item list-group-item-action">A second link item</a>
-                                        <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>
-                                        <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>
-                                        <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>
-                                        <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>
-                                        <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>
-                                        <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>
-                                        <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>
-                                        <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>
+                                        {% for str in stores %}
+
+                                        <a href="/stores/{{str.slug}}" class="list-group-item list-group-item-action">
+                                            {{str.name}}
+                                          </a> {% endfor %}
+
                                     </div>
                                 </div>
                             </div>

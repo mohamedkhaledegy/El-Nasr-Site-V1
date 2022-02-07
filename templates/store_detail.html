@@ -21,7 +21,7 @@
                     <div class="d-flex align-items-center mb-2">
                         <i class="bi bi-geo-alt fs-1 text-primary me-3"></i>
                         <div class="text-start">
-                            <h5 class="mb-0">{{store.area_name}}</h5>
+                            <h5 class="mb-0">عنوان الفرع</h5>
 
                             <span>{{store.address_store}}</span>
                         </div>
@@ -29,14 +29,15 @@
                     <div class="d-flex align-items-center mb-2">
                         <i class="bi bi-envelope-open fs-1 text-primary me-3"></i>
                         <div class="text-start">
-                            <h5 class="mb-0">ايميل الادمين</h5>
+                            <h5 class="mb-0">ايميل الأدمين</h5>
+                            {% if %} {% endif %}
                             <span>name@aman-fs.com</span>
                         </div>
                     </div>
                     <div class="d-flex align-items-center">
                         <i class="bi bi-phone-vibrate fs-1 text-primary me-3"></i>
                         <div class="text-start">
-                            <h5 class="mb-0">رقم التليفون</h5>
+                            <h5 class="mb-0">رقم تليفون الأدمين</h5>
                             <span>{{store.admen.mobile_num}}</span>
                         </div>
                     </div>
@@ -50,7 +51,8 @@
                     frameborder="0" style="min-height: 400px; border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe> {% endif %}
             </div>
             <div class="col-xl-12 col-lg-6 wow slideInUp" data-wow-delay="0.3s">
-                <form method="POST">
+                <h4 class="text-center btn-outline-danger py-3"> طلب صيانة </h4>
+                <form method="POST" class="form-control">
                     {% csrf_token %} {% bootstrap_form form_visit %}
 
                     <button type="submit" class="btn btn-outline-success">Send Request</button>
